@@ -1,3 +1,7 @@
-export default function Login() {
-  return <main>로그인 페이지</main>;
-}
+import { redirect } from "next/navigation";
+
+const Login = () => {
+  return redirect("/i/flow/login");
+};
+
+export default Login;
