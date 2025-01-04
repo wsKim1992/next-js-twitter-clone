@@ -1,6 +1,9 @@
-"use client";
+"use clinet";
+
 import SignupModal from "@/app/(beforeLogin)/_component/SignupModal";
 
-export default function Page() {
+const SignUpIntercepter = () => {
   return <SignupModal />;
-}
+};
+
+export default SignUpIntercepter;

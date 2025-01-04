@@ -2,8 +2,7 @@
 
 import LoginModal from "@/app/(beforeLogin)/_component/LoginModal";
 
-const LoginPage = () => {
+export default function LoginInterceptor() {
+  console.log("intercepted!");
   return <LoginModal />;
-};
-
-export default LoginPage;
+}
