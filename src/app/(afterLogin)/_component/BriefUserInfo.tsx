@@ -2,11 +2,27 @@
 
 import ZeroChoLogo from "@public/5Udwvqim.jpg";
 import Image from "next/image";
-import { Box, Text } from "@radix-ui/themes";
+import { Box, Text, Flex } from "@radix-ui/themes";
+import { styled } from "@/stitches.config";
 
+const UserInfoBox = styled(Flex, {
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  width: "100%",
+  height: "66px",
+  padding: "12px",
+  margin: "12px 0px",
+  borderRadius: "50px",
+  boxSizing: "border-box",
+  cursor: "pointer",
+  "&:hover": {
+    background: "rgba(15,20,25, 0.1)",
+  },
+});
 const BriefUserInfo = () => {
   return (
-    <>
+    <UserInfoBox>
       <Image
         src={ZeroChoLogo}
         width={40}
@@ -39,7 +55,7 @@ const BriefUserInfo = () => {
           @zerocho
         </Text>
       </Box>
-    </>
+    </UserInfoBox>
   );
 };
 

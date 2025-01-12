@@ -1,3 +1,4 @@
+"use client";
 import { Box } from "@radix-ui/themes";
 import LNBLink from "./LNBLink";
 import UploadButton from "./UploadButton";

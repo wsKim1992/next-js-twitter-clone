@@ -3,8 +3,9 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { type ReactNode } from "react";
 import "@radix-ui/themes/styles.css";
+import StitchesProvider from "@/_component/StitchesProvider";
 import { Theme } from "@radix-ui/themes";
-import { getCssText } from "../stitches.config";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,15 +21,11 @@ type Props = {
 export default function RootLayout({ children }: Props) {
   return (
     <html lang="en">
-      <head>
-        <style
-          dangerouslySetInnerHTML={{
-            __html: getCssText(),
-          }}
-        />
-      </head>
+      <head></head>
       <body className={inter.className}>
-        <Theme>{children}</Theme>
+        <StitchesProvider>
+          <Theme>{children}</Theme>
+        </StitchesProvider>
       </body>
     </html>
   );

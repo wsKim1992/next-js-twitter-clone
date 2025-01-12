@@ -1,6 +1,11 @@
 import { styled } from "@/stitches.config";
 import { Box, TextField } from "@radix-ui/themes";
 
+export const FormContainer = styled(Box, {
+  width: "inherit",
+  marginBottom: "60px",
+});
+
 export const FormBox = styled(Box, {
   position: "fixed",
   width: "inherit",

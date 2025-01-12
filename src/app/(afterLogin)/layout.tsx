@@ -3,24 +3,7 @@ import { Box, Flex } from "@radix-ui/themes";
 import Logo from "./_component/Logo";
 import LNB from "./_component/LNB";
 import BriefUserInfo from "./_component/BriefUserInfo";
-import { styled } from "@/stitches.config";
 import LeftForm from "./_component/LeftForm";
-
-const UserInfoBox = styled(Flex, {
-  flexDirection: "row",
-  justifyContent: "flex-start",
-  alignItems: "center",
-  width: "100%",
-  height: "66px",
-  padding: "12px",
-  margin: "12px 0px",
-  borderRadius: "50px",
-  boxSizing: "border-box",
-  cursor: "pointer",
-  "&:hover": {
-    background: "rgba(15,20,25, 0.1)",
-  },
-});
 
 const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
   return (
@@ -59,9 +42,7 @@ const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
                   <Logo />
                   <LNB />
                 </Flex>
-                <UserInfoBox>
-                  <BriefUserInfo />
-                </UserInfoBox>
+                <BriefUserInfo />
               </Flex>
             </section>
           </Flex>
