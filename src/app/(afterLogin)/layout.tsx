@@ -4,7 +4,7 @@ import Logo from "./_component/Logo";
 import LNB from "./_component/LNB";
 import BriefUserInfo from "./_component/BriefUserInfo";
 import LeftForm from "./_component/LeftForm";
-
+import Trends from "./_component/Trends";
 const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
   return (
     <Flex
@@ -73,6 +73,7 @@ const AfterLoginLayout = ({ children }: { children: ReactNode }) => {
           <Box asChild style={{ width: "350px", height: "100%" }}>
             <section>
               <LeftForm />
+              <Trends />
             </section>
           </Box>
         </Flex>
