@@ -1,5 +1,7 @@
+"use client";
+
 import { styled } from "@/stitches.config";
-import { Box, TextField } from "@radix-ui/themes";
+import { Box, TextField, Tabs } from "@radix-ui/themes";
 
 export const FormContainer = styled(Box, {
   width: "inherit",
@@ -18,4 +20,7 @@ export const StyledTextField = styled(TextField.Root, {
   height: "100%",
   borderRadius: "50px",
   background: "#eff3f4",
+});
+export const CustomTabList = styled(Tabs.List, {
+  justifyContent: "space-around",
 });
