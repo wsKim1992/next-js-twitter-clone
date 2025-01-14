@@ -5,7 +5,7 @@ import EditorTools from "./EditorTools";
 
 const ContentEditable = () => {
   return (
-    <Flex direction={"column"} style={{ width: "100%" }}>
+    <Flex direction={"column"} style={{ width: "100%", flexGrow: "1" }}>
       <Editor contentEditable={true} />
       <EditorTools />
     </Flex>

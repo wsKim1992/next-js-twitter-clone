@@ -22,7 +22,7 @@ const Trends = () => {
   return (
     <TrendsBox>
       <Title>나를 위한 트렌드</Title>
-      {Array.from({ length: 8 }).map((idx) => (
+      {Array.from({ length: 8 }).map((_, idx) => (
         <Trend
           key={`${idx}`}
           title="실시간 트랜드"

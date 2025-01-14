@@ -17,6 +17,7 @@ export const Editor = styled(Box, {
   overflowWrap: "break-word",
   padding: "8px",
   boxSizing: "border-box",
+  flexGrow: "1",
   "&:focus": {
     outline: "none",
   },

@@ -41,9 +41,9 @@ const PostTweet = () => {
             src={ZeroChoLogo}
           />
         </Box>
-        <Box style={{ flexGrow: "1", minHeight: "157px" }}>
+        <Flex style={{ flexGrow: "1", minHeight: "157px" }}>
           <ContentEditable />
-        </Box>
+        </Flex>
       </Flex>
     </Box>
   );
