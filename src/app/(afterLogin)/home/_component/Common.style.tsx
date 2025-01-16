@@ -3,7 +3,7 @@ import { Box, Button } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
 
 export const LayoutContainer = styled(Box, {
-  width: "inherit",
+  width: "100%",
   minHeight: "100dvh",
   background: "#fff",
   height: "auto",
@@ -11,6 +11,7 @@ export const LayoutContainer = styled(Box, {
 
 export const Editor = styled(Box, {
   width: "512px",
+  minHeight: "150px",
   height: "fit-content",
   fontSize: "15px",
   fontWeight: "400",
@@ -51,4 +52,27 @@ export const IconWrapper = styled(Box, {
     height: "20px",
     fill: "#1d9bf0",
   },
+});
+
+export const CancelButton = styled(Button, {
+  svg: {
+    fill: "rgba(255,255,255)",
+  },
+  background: "rgba(15, 20, 25, 0.55)",
+  width: "35.5px",
+  height: "35.5px",
+  boxSizing: "border-box",
+  borderRadius: "100%",
+  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.2)",
+  transform: "0.2s box-shadow",
+  "&:active": {
+    boxShadow: "none",
+  },
+  "&:hover": {
+    background: "rgba(15, 20, 25, 0.85)",
+  },
+  cursor: "pointer",
+  position: "absolute",
+  top: "5px",
+  right: "5px",
 });

@@ -4,7 +4,7 @@ import HomeTab from "./_component/HomeTab";
 import PostTweet from "./_component/PostTweet";
 export default function Home() {
   return (
-    <Box style={{ width: "inherit", height: "fit-content" }}>
+    <Box style={{ height: "fit-content" }}>
       <HomeTab />
       <PostTweet />
     </Box>

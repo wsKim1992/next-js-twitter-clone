@@ -8,7 +8,6 @@ const PostTweet = () => {
   return (
     <Box
       style={{
-        width: "inherit",
         height: "fit-content",
         paddingTop: "4px",
       }}
@@ -18,12 +17,10 @@ const PostTweet = () => {
         align={"start"}
         justify={"start"}
         style={{
-          width: "inherit",
           height: "fit-content",
           padding: "0px 16px",
           boxSizing: "border-box",
         }}
-        gap={"16px"}
       >
         <Box
           style={{
@@ -41,9 +38,7 @@ const PostTweet = () => {
             src={ZeroChoLogo}
           />
         </Box>
-        <Flex style={{ flexGrow: "1", minHeight: "157px" }}>
-          <ContentEditable />
-        </Flex>
+        <ContentEditable />
       </Flex>
     </Box>
   );
