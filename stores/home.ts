@@ -1,12 +1,18 @@
 import { create } from "zustand";
-import { type THomeTabObj, type TPostForm } from "@typings/home";
+import {
+  type THomeTabObj,
+  type TPostForm,
+  type TImgSlideDir,
+} from "@typings/home";
 
 type THomeState = {
+  postFormImgIdx?: number;
   tabVal: THomeTabObj;
   postForm: TPostForm;
 };
 
 type THomeAction = {
+  init: () => void;
   setTabVal: (
     tabVal: THomeTabObj | ((newTabVal: THomeTabObj) => THomeTabObj)
   ) => void;
@@ -26,10 +32,38 @@ type THomeAction = {
           idx?: number;
         }) => string[] | undefined);
   }) => void;
+  setImgIdx: ({
+    idx,
+    newImageIdx,
+  }: {
+    idx?: number;
+    dir: TImgSlideDir;
+    newImageIdx:
+      | (({
+          idx,
+          dir,
+          limit,
+        }: {
+          idx?: number;
+          dir: TImgSlideDir;
+          limit: number;
+        }) => number)
+      | number;
+  }) => void;
 };
 
-export const useHomeStore = create<THomeState & THomeAction>()((set) => ({
+export const useHomeStore = create<THomeState & THomeAction>()((set, get) => ({
   tabVal: "FOLLOWING",
+  init: () =>
+    set(() => ({
+      tabVal: "FOLLOWING",
+      postForm: {
+        content: "",
+        imgs: undefined,
+      },
+      postFormImgIdx: undefined,
+    })),
+
   setTabVal: (newTabVal) =>
     set((state) => ({
       tabVal:
@@ -47,17 +81,40 @@ export const useHomeStore = create<THomeState & THomeAction>()((set) => ({
         content: newContent,
       },
     })),
+
   setImgs: ({ idx, imgs: newImgs }) =>
-    set((state) => ({
-      ...state,
-      postForm: {
-        ...state.postForm,
-        imgs:
-          typeof newImgs === "function"
-            ? newImgs({ idx, imgs: state.postForm.imgs })
-            : state.postForm.imgs
-            ? [...state.postForm.imgs, ...newImgs]
-            : [...newImgs],
-      },
-    })),
+    set((state) => {
+      return {
+        ...state,
+        postForm: {
+          ...state.postForm,
+          imgs:
+            typeof newImgs === "function"
+              ? newImgs({ idx, imgs: state.postForm.imgs })
+              : state.postForm.imgs
+              ? [...newImgs, ...state.postForm.imgs]
+              : [...newImgs],
+        },
+      };
+    }),
+  setImgIdx: ({ dir, newImageIdx }) => {
+    return set((state) => {
+      const {
+        postForm: { imgs },
+      } = state;
+      return {
+        ...state,
+        postFormImgIdx:
+          typeof newImageIdx === "function"
+            ? dir !== undefined
+              ? newImageIdx({
+                  idx: state.postFormImgIdx,
+                  dir,
+                  limit: imgs ? imgs.length : 0,
+                })
+              : undefined
+            : newImageIdx,
+      };
+    });
+  },
 }));

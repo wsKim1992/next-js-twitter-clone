@@ -9,3 +9,5 @@ export type TPostForm = {
   content: string;
   imgs?: string[];
 };
+
+export type TImgSlideDir = "L" | "R";

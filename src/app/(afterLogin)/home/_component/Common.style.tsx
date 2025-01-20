@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button } from "@radix-ui/themes";
+import { Box, Button, Container } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
 
 export const LayoutContainer = styled(Box, {
@@ -7,6 +7,17 @@ export const LayoutContainer = styled(Box, {
   minHeight: "100dvh",
   background: "#fff",
   height: "auto",
+});
+
+export const ImageContainer = styled(Container, {
+  minWidth: "100%",
+  height: "fit-content",
+  overflowX: "auto",
+  scrollbarWidth: "none", // Firefox
+  "-ms-overflow-style": "none", // IE
+  "&::-webkit-scrollbar": {
+    display: "none", // Webkit 브라우저
+  },
 });
 
 export const Editor = styled(Box, {
@@ -57,6 +68,8 @@ export const IconWrapper = styled(Box, {
 export const CancelButton = styled(Button, {
   svg: {
     fill: "rgba(255,255,255)",
+    width: "25px",
+    height: "25px",
   },
   background: "rgba(15, 20, 25, 0.55)",
   width: "35.5px",
@@ -75,4 +88,15 @@ export const CancelButton = styled(Button, {
   position: "absolute",
   top: "5px",
   right: "5px",
+  zIndex: "100",
+  "&[data-arrow-left]": {
+    top: "65%",
+    left: "5px",
+    marginTop: "-12.5px",
+  },
+  "&[data-arrow-right]": {
+    top: "65%",
+    right: "5px",
+    marginTop: "-12.5px",
+  },
 });

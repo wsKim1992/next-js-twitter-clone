@@ -1,3 +1,37 @@
+import { type TImgSlideDir } from "@typings/home";
+
+export const setImgIdxFunc = ({
+  idx,
+  dir,
+  limit,
+}: {
+  idx?: number;
+  dir: TImgSlideDir;
+  limit: number;
+}): number => {
+  if (idx !== undefined) {
+    let nextIdx = dir === "R" ? idx + 1 : idx - 1;
+    if (nextIdx >= limit) {
+      nextIdx = idx;
+    } else if (nextIdx < 0) {
+      nextIdx = 0;
+    }
+    return nextIdx;
+  }
+  return 0;
+};
+
+export const deleteImgs = ({
+  idx,
+  imgs,
+}: {
+  idx?: number;
+  imgs?: string[];
+}): string[] | undefined => {
+  if (!imgs) return undefined;
+  return imgs.filter((_img, arrIdx) => arrIdx !== idx);
+};
+
 export const convertIntoBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     if (file.type.match("images/*")) {

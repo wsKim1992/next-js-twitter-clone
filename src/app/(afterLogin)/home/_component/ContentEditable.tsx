@@ -12,6 +12,7 @@ const ContentEditable = () => {
         flex: "1 1 0",
         flexWrap: "wrap",
         minWidth: "0px",
+        position: "relative",
       }}
     >
       <Editor contentEditable={true} />

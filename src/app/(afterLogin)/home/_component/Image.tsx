@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { Box, Button } from "@radix-ui/themes";
+import { Box } from "@radix-ui/themes";
 import { useHomeStore } from "@stores/home";
 import { type FC } from "react";
 import { CancelButton } from "./Common.style";
+import { deleteImgs } from "@utils/homeForm";
+
 type SingleImageProps = {
   src: string;
   idx: number;
@@ -11,6 +13,9 @@ type SingleImageProps = {
 
 const SingleImage: FC<SingleImageProps> = ({ src, idx }) => {
   const setImgs = useHomeStore((state) => state.setImgs);
+  const handdleClickCancel = () => {
+    setImgs({ idx, imgs: deleteImgs });
+  };
   return (
     <Box
       className="img-box"
@@ -24,7 +29,7 @@ const SingleImage: FC<SingleImageProps> = ({ src, idx }) => {
         position: "relative",
       }}
     >
-      <CancelButton>
+      <CancelButton onClick={handdleClickCancel}>
         <svg
           width="15"
           height="15"
