@@ -89,8 +89,6 @@ const useImageIdx = () => {
   useEffect(() => {
     if (imgs && imgIdx >= imgs?.length) {
       setImgIdx(imgs.length - 1);
-    } else if (imgIdx - 1 < 0) {
-      setImgIdx(0);
     } else if (imgs === undefined) {
       setImgIdx(-1);
     }
