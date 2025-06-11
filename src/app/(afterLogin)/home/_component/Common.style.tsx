@@ -1,6 +1,62 @@
 "use client";
-import { Box, Button, Container } from "@radix-ui/themes";
+import { Box, Button, Text, Flex } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
+
+export const ImageCropSelectBox = styled(Box, {
+  "&.ReactCrop--crop-selection": {
+    border: "2px dotted rgb(29, 155, 240, 0.01)",
+    position: "absolute",
+    zIndex: "100",
+    width: "100%",
+  },
+  "&.ReactCrop__drag-handle": {
+    backgroundColor: "#ff6347", // 드래그 핸들 색상
+    width: "10px",
+    height: "10px",
+    borderRadius: "50%",
+  },
+  width: "100%",
+  height: "550px",
+  position: "relative",
+});
+
+export const StyledDialogTitle = styled(Text, {
+  background: "#000",
+  color: "#fff",
+  fontSize: "18px",
+  fontWeight: "600",
+  width: "inherit",
+  padding: "5px 5px",
+  boxSizing: "border-box",
+  margin: "0px",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "start",
+});
+
+export const ImageSettingDialogContainer = styled(Flex, {
+  position: "fixed",
+  top: "0px",
+  left: "0px",
+  zIndex: "10000",
+  background: "rgba(0,0,0,0.75)",
+  width: "100dvw",
+  height: "100dvh",
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+});
+
+export const ImageSettingDialogCtx = styled(Box, {
+  width: "600px",
+  height: "fit-content",
+  backgroundColor: "#000",
+  padding: "10px",
+  display: "flex",
+  flexDirection: "column",
+  borderRadius: "15px",
+});
 
 export const LayoutContainer = styled(Box, {
   width: "100%",
@@ -9,10 +65,11 @@ export const LayoutContainer = styled(Box, {
   height: "auto",
 });
 
-export const ImageContainer = styled(Container, {
+export const ImageContainer = styled(Box, {
   minWidth: "100%",
   height: "fit-content",
   overflowX: "auto",
+  whiteSpace: "nowrap",
   scrollbarWidth: "none", // Firefox
   "-ms-overflow-style": "none", // IE
   "&::-webkit-scrollbar": {
@@ -98,5 +155,18 @@ export const CancelButton = styled(Button, {
     top: "65%",
     right: "5px",
     marginTop: "-12.5px",
+  },
+  "&[data-edit-button]": {
+    left: "15px",
+    fontSize: "14px",
+    fontWeight: "600",
+    color: "#fff",
+  },
+  "&[data-no-absolute]": {
+    position: "static",
+    svg: {
+      width: "20px",
+      height: "20px",
+    },
   },
 });

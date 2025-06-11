@@ -7,7 +7,7 @@ export type THomeTabObj = "RECOMMAND" | "FOLLOWING";
 
 export type TPostForm = {
   content: string;
-  imgs?: string[];
+  imgs?: string[] | undefined;
 };
 
 export type TImgSlideDir = "L" | "R";

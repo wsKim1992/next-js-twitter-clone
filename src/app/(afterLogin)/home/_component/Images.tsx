@@ -1,6 +1,5 @@
 "use client";
 import { useHomeStore } from "@stores/home";
-import { Box } from "@radix-ui/themes";
 import { isEqual } from "lodash";
 import SingleImage from "./Image";
 import { useStoreWithEqualityFn } from "zustand/traditional";
@@ -15,7 +14,7 @@ import {
   createContext,
 } from "react";
 import { CancelButton, ImageContainer } from "./Common.style";
-import { setImgIdxFunc } from "@utils/homeForm";
+import { setImgIdxFunc, slideToImgByIdx } from "@utils/homeForm";
 import { type TImgSlideDir } from "@typings/home";
 
 type ArrowButtonProps = {
@@ -41,8 +40,12 @@ const ArrowButton: FC<ArrowButtonProps> = ({ dir }) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     setImgIdx && setImgIdx(nextIdx);
   };
-  return dir === "L" ? (
-    <CancelButton onClick={handleClickBtn} data-arrow-left>
+  return imgs === undefined ? null : dir === "L" ? (
+    <CancelButton
+      disabled={imgIdx <= 0}
+      onClick={handleClickBtn}
+      data-arrow-left
+    >
       <svg
         width="25"
         height="25"
@@ -59,7 +62,11 @@ const ArrowButton: FC<ArrowButtonProps> = ({ dir }) => {
       </svg>
     </CancelButton>
   ) : (
-    <CancelButton onClick={handleClickBtn} data-arrow-right>
+    <CancelButton
+      disabled={imgIdx >= imgs?.length - 1}
+      onClick={handleClickBtn}
+      data-arrow-right
+    >
       <svg
         width="25"
         height="25"
@@ -102,33 +109,27 @@ const useImageIdx = () => {
 };
 
 const Images = () => {
-  const { imgs, imgIdx, setImgIdx } = useImageIdx();
   const ref = useRef<HTMLDivElement | null>(null);
+
+  const { imgs, imgIdx, setImgIdx } = useImageIdx();
+
   useEffect(() => {
     if (ref.current) {
-      const childs = ref.current.children;
-      if (childs[imgIdx]) {
-        childs[imgIdx].scrollIntoView({
-          behavior: "smooth",
-          block: "center",
-          inline: "start",
-        });
-      }
+      slideToImgByIdx({ parentElem: ref.current, idx: imgIdx });
     }
   }, [imgIdx]);
 
   return (
     <Context.Provider value={{ imgIdx, setImgIdx, imgs }}>
-      <ImageContainer>
-        {imgs && imgIdx >= 0 && <ArrowButton dir="L" />}
-        {imgs && imgIdx < imgs?.length - 1 && <ArrowButton dir="R" />}
-        <Box ref={ref} style={{ minWidth: "100%", whiteSpace: "nowrap" }}>
-          {imgs &&
-            imgs.map((img, idx) => (
-              <SingleImage key={`${idx}`} src={img} idx={idx} />
-            ))}
-        </Box>
-      </ImageContainer>
+      {imgs && (
+        <ImageContainer ref={ref}>
+          <ArrowButton dir="L" />
+          {imgs.map((img, idx) => (
+            <SingleImage key={`${img}_${idx}`} src={img} idx={idx} />
+          ))}
+          <ArrowButton dir="R" />
+        </ImageContainer>
+      )}
     </Context.Provider>
   );
 };

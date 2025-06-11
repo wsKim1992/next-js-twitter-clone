@@ -2,9 +2,10 @@
 "use client";
 import { Box } from "@radix-ui/themes";
 import { useHomeStore } from "@stores/home";
-import { type FC } from "react";
+import { type FC, useState } from "react";
 import { CancelButton } from "./Common.style";
 import { deleteImgs } from "@utils/homeForm";
+import EditImage from "./EditImage";
 
 type SingleImageProps = {
   src: string;
@@ -12,6 +13,7 @@ type SingleImageProps = {
 };
 
 const SingleImage: FC<SingleImageProps> = ({ src, idx }) => {
+  const [isShowDialog, setIsShowDialog] = useState<boolean>(false);
   const setImgs = useHomeStore((state) => state.setImgs);
   const handdleClickCancel = () => {
     setImgs({ idx, imgs: deleteImgs });
@@ -45,6 +47,17 @@ const SingleImage: FC<SingleImageProps> = ({ src, idx }) => {
           ></path>
         </svg>
       </CancelButton>
+      <CancelButton
+        onClick={() => {
+          setIsShowDialog(true);
+        }}
+        data-edit-button
+      >
+        Edit
+      </CancelButton>
+      {isShowDialog && (
+        <EditImage idx={idx} setIsShowDialog={setIsShowDialog} />
+      )}
       <Box
         asChild
         style={{

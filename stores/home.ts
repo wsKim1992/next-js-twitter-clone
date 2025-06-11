@@ -52,7 +52,7 @@ type THomeAction = {
   }) => void;
 };
 
-export const useHomeStore = create<THomeState & THomeAction>()((set, get) => ({
+export const useHomeStore = create<THomeState & THomeAction>()((set) => ({
   tabVal: "FOLLOWING",
   init: () =>
     set(() => ({
