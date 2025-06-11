@@ -2,6 +2,51 @@ import { type TImgSlideDir } from "@typings/home";
 
 import { type Crop } from "react-image-crop";
 
+import { type SetStateAction, type Dispatch, type UIEvent } from "react";
+
+export const debounce = <T>(
+  cb: (args: T) => void,
+  delay: number
+): ((...args: Parameters<(data: T) => void>) => void) => {
+  let handler: ReturnType<typeof setInterval> | null = null;
+  return (...args: Parameters<(data: T) => void>) => {
+    if (handler) {
+      clearTimeout(handler);
+    }
+    handler = setTimeout(() => {
+      cb(...args);
+    }, delay);
+  };
+};
+
+export const calculateNextIdx = (
+  setImgIdx: Dispatch<SetStateAction<number>>
+) => {
+  return (currentTarget: EventTarget & Element) => {
+    const { scrollLeft, scrollWidth } = currentTarget;
+    if (scrollLeft > 0) {
+      const offsetIdx = Math.floor(scrollWidth / (scrollWidth - scrollLeft));
+      console.log({ scrollLeft });
+      console.log({ offsetIdx });
+      setImgIdx(offsetIdx);
+    } else {
+      setImgIdx(0);
+    }
+  };
+};
+
+export const onScrollHandler = (
+  setImgIdx: Dispatch<SetStateAction<number>>
+) => {
+  const debounceHandler = debounce(calculateNextIdx(setImgIdx), 500);
+  return (evt: UIEvent) => {
+    const { currentTarget } = evt;
+    if (currentTarget) {
+      debounceHandler(currentTarget);
+    }
+  };
+};
+
 export const loadImage = ({
   src,
   fixedWidth,
@@ -14,9 +59,6 @@ export const loadImage = ({
     imgObj.src = src;
     imgObj.onload = () => {
       const ratio = imgObj.height / imgObj.width;
-      console.log(imgObj.height);
-      console.log(imgObj.width);
-      console.log({ fixedWidth });
       resolve({
         x: 50,
         y: 50,

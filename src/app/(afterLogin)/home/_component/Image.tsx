@@ -29,6 +29,7 @@ const SingleImage: FC<SingleImageProps> = ({ src, idx }) => {
         paddingLeft: "10px",
         boxSizing: "border-box",
         position: "relative",
+        scrollSnapAlign: "start",
       }}
     >
       <CancelButton onClick={handdleClickCancel}>

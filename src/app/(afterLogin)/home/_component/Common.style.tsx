@@ -66,12 +66,13 @@ export const LayoutContainer = styled(Box, {
 });
 
 export const ImageContainer = styled(Box, {
-  minWidth: "100%",
+  width: "fit-content",
   height: "fit-content",
   overflowX: "auto",
   whiteSpace: "nowrap",
   scrollbarWidth: "none", // Firefox
   "-ms-overflow-style": "none", // IE
+  scrollSnapType: "x mandatory",
   "&::-webkit-scrollbar": {
     display: "none", // Webkit 브라우저
   },

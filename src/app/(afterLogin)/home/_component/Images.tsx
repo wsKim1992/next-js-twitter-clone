@@ -12,9 +12,14 @@ import {
   type Dispatch,
   type SetStateAction,
   createContext,
+  useMemo,
 } from "react";
 import { CancelButton, ImageContainer } from "./Common.style";
-import { setImgIdxFunc, slideToImgByIdx } from "@utils/homeForm";
+import {
+  onScrollHandler,
+  setImgIdxFunc,
+  slideToImgByIdx,
+} from "@utils/homeForm";
 import { type TImgSlideDir } from "@typings/home";
 
 type ArrowButtonProps = {
@@ -94,12 +99,12 @@ const useImageIdx = () => {
   );
 
   useEffect(() => {
-    if (imgs && imgIdx >= imgs?.length) {
-      setImgIdx(imgs.length - 1);
+    if (imgs) {
+      setImgIdx(0);
     } else if (imgs === undefined) {
       setImgIdx(-1);
     }
-  }, [imgs, imgIdx]);
+  }, [imgs]);
 
   return {
     imgs,
@@ -118,11 +123,13 @@ const Images = () => {
       slideToImgByIdx({ parentElem: ref.current, idx: imgIdx });
     }
   }, [imgIdx]);
-
+  const handleScroll = useMemo(() => {
+    return onScrollHandler(setImgIdx);
+  }, []);
   return (
     <Context.Provider value={{ imgIdx, setImgIdx, imgs }}>
       {imgs && (
-        <ImageContainer ref={ref}>
+        <ImageContainer ref={ref} onScroll={handleScroll}>
           <ArrowButton dir="L" />
           {imgs.map((img, idx) => (
             <SingleImage key={`${img}_${idx}`} src={img} idx={idx} />
