@@ -4,8 +4,12 @@ import { IconBtn, IconWrapper } from "./Common.style";
 import { type ChangeEvent } from "react";
 import { useHomeStore } from "@stores/home";
 import { getBs64s } from "@utils/homeForm";
+import { useContext } from "react";
+import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
+import Emojis from "@/app/(afterLogin)/home/_component/Emojis";
 
 const EditorTools = () => {
+  const { showEmojiBox, setShowEmojiBox } = useContext(Ctx);
   const setImgs = useHomeStore((state) => state.setImgs);
   const onChange = async (evt: ChangeEvent<HTMLInputElement>) => {
     try {
@@ -19,7 +23,10 @@ const EditorTools = () => {
     }
   };
   return (
-    <Flex direction={"row"} style={{ width: "inherit", height: "fit-content" }}>
+    <Flex
+      direction={"row"}
+      style={{ width: "inherit", height: "fit-content", position: "relative" }}
+    >
       <IconBtn>
         <input
           type="file"
@@ -57,7 +64,13 @@ const EditorTools = () => {
           </svg>
         </IconWrapper>
       </IconBtn>
-      <IconBtn>
+      <IconBtn
+        onClick={() => {
+          if (setShowEmojiBox) {
+            setShowEmojiBox((prev) => !prev);
+          }
+        }}
+      >
         <IconWrapper>
           <svg
             viewBox="0 0 24 24"
@@ -70,6 +83,7 @@ const EditorTools = () => {
           </svg>
         </IconWrapper>
       </IconBtn>
+      {showEmojiBox && <Emojis />}
     </Flex>
   );
 };

@@ -4,6 +4,73 @@ import { type Crop } from "react-image-crop";
 
 import { type SetStateAction, type Dispatch, type UIEvent } from "react";
 
+import Quill, { type Delta, type EmitterSource } from "quill";
+
+import DOMPurify from "dompurify";
+
+const sanitizeDOM = (
+  setContent: (newContent: string) => void,
+  setDelta: (delta: Delta) => void
+) => {
+  return (quillInstance: Quill) => {
+    const beforePurified = quillInstance.root.innerHTML;
+    const cleanedDOM = DOMPurify.sanitize(beforePurified, {
+      KEEP_CONTENT: false,
+      FORBID_TAGS: ["script", "a"],
+    });
+    const selection = quillInstance.getSelection();
+    if (beforePurified !== cleanedDOM) {
+      quillInstance.clipboard.dangerouslyPasteHTML(0, cleanedDOM, "api");
+      if (selection) {
+        quillInstance.setSelection(selection.index, selection.length, "silent");
+      }
+      setContent(quillInstance.root.innerHTML);
+      setDelta(quillInstance.getContents());
+    }
+  };
+};
+
+const textChangeCB = (
+  quillInstance: Quill,
+  setContent: (newContent: string) => void,
+  setDelta: (delta: Delta) => void
+): ((delta: Delta, oldDelta: Delta, source: EmitterSource) => void) => {
+  const debounceHandler = debounce(sanitizeDOM, 200);
+  return (delta: Delta) => {
+    debounceHandler(quillInstance);
+    setContent(quillInstance.getText());
+    setDelta(delta);
+  };
+};
+
+export const initQuill = ({
+  elem,
+  setQuillInstance,
+  setContent,
+  setDelta,
+}: {
+  elem: HTMLDivElement;
+  setQuillInstance: Dispatch<SetStateAction<Quill | null>>;
+  setContent: (newContent: string) => void;
+  setDelta: (delta: Delta) => void;
+}) => {
+  const instance = new Quill(elem, {
+    theme: "snow",
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, false] }],
+        ["bold", "italic", "underline"],
+        ["blockquote", "code-block"],
+        [{ list: "ordered" }, { list: "bullet" }],
+        ["link"],
+        ["clean"],
+      ],
+    },
+  });
+  instance.on("text-change", textChangeCB(instance, setContent, setDelta));
+  setQuillInstance(instance);
+};
+
 export const debounce = <T>(
   cb: (args: T) => void,
   delay: number
@@ -12,6 +79,7 @@ export const debounce = <T>(
   return (...args: Parameters<(data: T) => void>) => {
     if (handler) {
       clearTimeout(handler);
+      handler = null;
     }
     handler = setTimeout(() => {
       cb(...args);
@@ -23,12 +91,13 @@ export const calculateNextIdx = (
   setImgIdx: Dispatch<SetStateAction<number>>
 ) => {
   return (currentTarget: EventTarget & Element) => {
-    const { scrollLeft, scrollWidth } = currentTarget;
+    const { scrollLeft } = currentTarget;
+
     if (scrollLeft > 0) {
-      const offsetIdx = Math.floor(scrollWidth / (scrollWidth - scrollLeft));
-      console.log({ scrollLeft });
-      console.log({ offsetIdx });
-      setImgIdx(offsetIdx);
+      const imageBox = currentTarget.querySelector(".img-box");
+      const imageWidth = imageBox ? imageBox.getBoundingClientRect().width : 0;
+      const idx = Math.floor(scrollLeft / imageWidth);
+      setImgIdx(idx);
     } else {
       setImgIdx(0);
     }
@@ -38,7 +107,7 @@ export const calculateNextIdx = (
 export const onScrollHandler = (
   setImgIdx: Dispatch<SetStateAction<number>>
 ) => {
-  const debounceHandler = debounce(calculateNextIdx(setImgIdx), 500);
+  const debounceHandler = debounce(calculateNextIdx(setImgIdx), 1500);
   return (evt: UIEvent) => {
     const { currentTarget } = evt;
     if (currentTarget) {

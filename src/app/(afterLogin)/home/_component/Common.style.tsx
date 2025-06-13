@@ -81,7 +81,8 @@ export const ImageContainer = styled(Box, {
 export const Editor = styled(Box, {
   width: "512px",
   minHeight: "150px",
-  height: "fit-content",
+  maxHeight: "250px",
+  overflowY: "auto",
   fontSize: "15px",
   fontWeight: "400",
   overflowWrap: "break-word",
@@ -90,6 +91,9 @@ export const Editor = styled(Box, {
   flexGrow: "1",
   "&:focus": {
     outline: "none",
+  },
+  "&.ql-container": {
+    width: "100%",
   },
 });
 

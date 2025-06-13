@@ -4,6 +4,7 @@ import {
   type TPostForm,
   type TImgSlideDir,
 } from "@typings/home";
+import { Delta } from "quill";
 
 type THomeState = {
   postFormImgIdx?: number;
@@ -17,6 +18,7 @@ type THomeAction = {
     tabVal: THomeTabObj | ((newTabVal: THomeTabObj) => THomeTabObj)
   ) => void;
   setContent: (newContent: string) => void;
+  setDelta: (newDelta: Delta) => void;
   setImgs: ({
     idx,
     imgs,
@@ -81,7 +83,15 @@ export const useHomeStore = create<THomeState & THomeAction>()((set) => ({
         content: newContent,
       },
     })),
-
+  setDelta(newDelta) {
+    set((state) => ({
+      ...state,
+      postForm: {
+        ...state.postForm,
+        delta: newDelta,
+      },
+    }));
+  },
   setImgs: ({ idx, imgs: newImgs }) =>
     set((state) => {
       return {
@@ -92,7 +102,7 @@ export const useHomeStore = create<THomeState & THomeAction>()((set) => ({
             typeof newImgs === "function"
               ? newImgs({ idx, imgs: state.postForm.imgs })
               : state.postForm.imgs
-              ? [...newImgs, ...state.postForm.imgs]
+              ? [...state.postForm.imgs, ...newImgs]
               : [...newImgs],
         },
       };

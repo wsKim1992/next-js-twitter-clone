@@ -1,9 +1,19 @@
 "use client";
 import { Flex } from "@radix-ui/themes";
-import { Editor } from "./Common.style";
 import EditorTools from "./EditorTools";
 import Images from "./Images";
+import { createContext, Dispatch, SetStateAction, useState } from "react";
+import Editor from "@/app/(afterLogin)/home/_component/Editor";
+
+export const Ctx = createContext<{
+  showEmojiBox: boolean;
+  setShowEmojiBox?: Dispatch<SetStateAction<boolean>>;
+}>({
+  showEmojiBox: false,
+});
+
 const ContentEditable = () => {
+  const [showEmojiBox, setShowEmojiBox] = useState<boolean>(false);
   return (
     <Flex
       direction={"column"}
@@ -15,9 +25,11 @@ const ContentEditable = () => {
         position: "relative",
       }}
     >
-      <Editor contentEditable={true} />
-      <EditorTools />
-      <Images />
+      <Ctx.Provider value={{ showEmojiBox, setShowEmojiBox }}>
+        <Editor />
+        <EditorTools />
+        <Images />
+      </Ctx.Provider>
     </Flex>
   );
 };
