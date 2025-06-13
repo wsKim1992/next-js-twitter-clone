@@ -1,5 +1,10 @@
+"use client";
+
 import { Box } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
+import { useContext, useEffect, useMemo } from "react";
+import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
+import { handleClickImoji } from "@utils/homeForm";
 
 const EmojiBox = styled(Box, {
   position: "absolute",
@@ -25,20 +30,45 @@ const EmojiBox = styled(Box, {
   },
 });
 
+const Emoji: React.FC<{ emoji: string }> = ({ emoji }) => {
+  const { quillInstance, setShowEmojiBox, tempSelection, setTempSelection } =
+    useContext(Ctx);
+  useEffect(() => {
+    return () => {
+      if (setTempSelection) {
+        setTempSelection(undefined);
+      }
+    };
+  }, [setTempSelection]);
+  const clickEmojiHandler = useMemo(() => {
+    if (quillInstance && tempSelection) {
+      return handleClickImoji(quillInstance, tempSelection);
+    }
+  }, [quillInstance, tempSelection]);
+  const handleClick = () => {
+    if (clickEmojiHandler) {
+      clickEmojiHandler(emoji);
+    }
+    if (setShowEmojiBox) {
+      setShowEmojiBox(false);
+    }
+  };
+  return (
+    <Box onClick={handleClick} className="imoji">
+      {emoji}
+    </Box>
+  );
+};
+
 const Emojis = () => {
   return (
     <EmojiBox>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
-      <Box className="imoji">😀</Box>
+      <Emoji emoji={"😀"} />
+      <Emoji emoji={"😀"} />
+      <Emoji emoji={"😀"} />
+      <Emoji emoji={"😀"} />
+      <Emoji emoji={"😀"} />
+      <Emoji emoji={"😀"} />
     </EmojiBox>
   );
 };

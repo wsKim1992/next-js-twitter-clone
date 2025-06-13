@@ -4,28 +4,32 @@ import { type Crop } from "react-image-crop";
 
 import { type SetStateAction, type Dispatch, type UIEvent } from "react";
 
-import Quill, { type Delta, type EmitterSource } from "quill";
+import Quill, { type Delta, type EmitterSource, type Range } from "quill";
 
 import DOMPurify from "dompurify";
 
-const sanitizeDOM = (
-  setContent: (newContent: string) => void,
-  setDelta: (delta: Delta) => void
-) => {
+export const handleClickImoji = (quillInstance: Quill, selection: Range) => {
+  return (emoji: string) => {
+    quillInstance.insertText(selection.index, emoji);
+    quillInstance.focus();
+    quillInstance.setSelection(selection.index + 1);
+  };
+};
+
+const sanitizeDOM = () => {
   return (quillInstance: Quill) => {
     const beforePurified = quillInstance.root.innerHTML;
     const cleanedDOM = DOMPurify.sanitize(beforePurified, {
       KEEP_CONTENT: false,
       FORBID_TAGS: ["script", "a"],
     });
-    const selection = quillInstance.getSelection();
-    if (beforePurified !== cleanedDOM) {
-      quillInstance.clipboard.dangerouslyPasteHTML(0, cleanedDOM, "api");
+    if (beforePurified != cleanedDOM) {
+      const selection = quillInstance.getSelection();
+      quillInstance.deleteText(0, quillInstance.getLength(), "api");
+      quillInstance.clipboard.dangerouslyPasteHTML(0, cleanedDOM, "silent");
       if (selection) {
         quillInstance.setSelection(selection.index, selection.length, "silent");
       }
-      setContent(quillInstance.root.innerHTML);
-      setDelta(quillInstance.getContents());
     }
   };
 };
@@ -35,10 +39,13 @@ const textChangeCB = (
   setContent: (newContent: string) => void,
   setDelta: (delta: Delta) => void
 ): ((delta: Delta, oldDelta: Delta, source: EmitterSource) => void) => {
-  const debounceHandler = debounce(sanitizeDOM, 200);
-  return (delta: Delta) => {
-    debounceHandler(quillInstance);
-    setContent(quillInstance.getText());
+  const sanitizeHandler = sanitizeDOM();
+  const debounceHandler = debounce(sanitizeHandler, 200);
+  return (delta: Delta, oldDelta: Delta, source: EmitterSource) => {
+    if (source === "user") {
+      debounceHandler(quillInstance);
+    }
+    setContent(quillInstance.root.innerHTML);
     setDelta(delta);
   };
 };
@@ -50,7 +57,7 @@ export const initQuill = ({
   setDelta,
 }: {
   elem: HTMLDivElement;
-  setQuillInstance: Dispatch<SetStateAction<Quill | null>>;
+  setQuillInstance: Dispatch<SetStateAction<Quill | undefined>>;
   setContent: (newContent: string) => void;
   setDelta: (delta: Delta) => void;
 }) => {

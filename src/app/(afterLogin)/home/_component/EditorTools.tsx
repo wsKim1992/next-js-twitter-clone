@@ -9,7 +9,8 @@ import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 import Emojis from "@/app/(afterLogin)/home/_component/Emojis";
 
 const EditorTools = () => {
-  const { showEmojiBox, setShowEmojiBox } = useContext(Ctx);
+  const { showEmojiBox, setShowEmojiBox, quillInstance, setTempSelection } =
+    useContext(Ctx);
   const setImgs = useHomeStore((state) => state.setImgs);
   const onChange = async (evt: ChangeEvent<HTMLInputElement>) => {
     try {
@@ -67,6 +68,10 @@ const EditorTools = () => {
       <IconBtn
         onClick={() => {
           if (setShowEmojiBox) {
+            const selection = quillInstance?.getSelection();
+            if (quillInstance && selection && setTempSelection) {
+              setTempSelection(selection);
+            }
             setShowEmojiBox((prev) => !prev);
           }
         }}

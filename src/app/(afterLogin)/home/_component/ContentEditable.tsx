@@ -2,18 +2,38 @@
 import { Flex } from "@radix-ui/themes";
 import EditorTools from "./EditorTools";
 import Images from "./Images";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import Editor from "@/app/(afterLogin)/home/_component/Editor";
+import Quill, { type Range } from "quill";
 
 export const Ctx = createContext<{
   showEmojiBox: boolean;
   setShowEmojiBox?: Dispatch<SetStateAction<boolean>>;
+  quillInstance?: Quill;
+  setQuillInstance?: Dispatch<SetStateAction<Quill | undefined>>;
+  tempSelection?: Range | undefined;
+  setTempSelection?: Dispatch<SetStateAction<Range | undefined>>;
 }>({
   showEmojiBox: false,
 });
 
 const ContentEditable = () => {
   const [showEmojiBox, setShowEmojiBox] = useState<boolean>(false);
+  const [quillInstance, setQuillInstance] = useState<Quill>();
+  const [tempSelection, setTempSelection] = useState<Range>();
+  useEffect(() => {
+    return () => {
+      setQuillInstance(undefined);
+      setTempSelection(undefined);
+    };
+  }, []);
+
   return (
     <Flex
       direction={"column"}
@@ -25,7 +45,16 @@ const ContentEditable = () => {
         position: "relative",
       }}
     >
-      <Ctx.Provider value={{ showEmojiBox, setShowEmojiBox }}>
+      <Ctx.Provider
+        value={{
+          showEmojiBox,
+          setShowEmojiBox,
+          quillInstance,
+          setQuillInstance,
+          tempSelection,
+          setTempSelection,
+        }}
+      >
         <Editor />
         <EditorTools />
         <Images />
