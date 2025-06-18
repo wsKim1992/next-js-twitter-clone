@@ -4,7 +4,7 @@ import Logo from "./Logo";
 import LNB from "./LNB";
 import BriefUserInfo from "./BriefUserInfo";
 import LeftForm from "./LeftForm";
-import Trends from "./Trends";
+import Trends from "../explore/_component/Trends";
 
 const AfterLoginLayout = ({
   children,

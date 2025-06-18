@@ -58,7 +58,7 @@ const LNB = () => {
         <Container>
           <LNBLink
             title="탐색하기"
-            path="/search"
+            path={["/explore", "/search"]}
             selectedIcon={
               <svg
                 width={26}

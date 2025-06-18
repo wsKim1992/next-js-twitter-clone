@@ -1,12 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  reactStrictMode: false,
-  experimental: {
-    turbo: {},
-    optimizeCss: true,
-  },
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
