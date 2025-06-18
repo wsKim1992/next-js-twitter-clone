@@ -30,7 +30,6 @@ const LinkContainer = styled(Box, {
 
 const LNBLink: FC<LNBLinkProps> = ({ title, icon, path, selectedIcon }) => {
   const segment = useSelectedLayoutSegment();
-  console.log({ segment });
   const isNow = useMemo(() => {
     if (segment && typeof path === "string") {
       return path.split("/")[1] === segment;

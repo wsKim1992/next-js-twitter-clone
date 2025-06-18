@@ -10,7 +10,7 @@ export default function Home() {
     return () => {
       init();
     };
-  }, []);
+  }, [init]);
   return (
     <Box style={{ height: "fit-content" }}>
       <HomeTab />

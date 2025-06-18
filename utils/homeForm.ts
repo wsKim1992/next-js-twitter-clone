@@ -16,7 +16,10 @@ export const handleClickImoji = (quillInstance: Quill, selection: Range) => {
   };
 };
 
-const sanitizeDOM = () => {
+const sanitizeDOM = (
+  setDelta: (delta: Delta) => void,
+  setContent: (newContent: string) => void
+) => {
   return (quillInstance: Quill) => {
     const beforePurified = quillInstance.root.innerHTML;
     const cleanedDOM = DOMPurify.sanitize(beforePurified, {
@@ -30,6 +33,8 @@ const sanitizeDOM = () => {
       if (selection) {
         quillInstance.setSelection(selection.index, selection.length, "silent");
       }
+      setContent(quillInstance.getText());
+      setDelta(quillInstance.getContents());
     }
   };
 };
@@ -39,7 +44,7 @@ const textChangeCB = (
   setContent: (newContent: string) => void,
   setDelta: (delta: Delta) => void
 ): ((delta: Delta, oldDelta: Delta, source: EmitterSource) => void) => {
-  const sanitizeHandler = sanitizeDOM();
+  const sanitizeHandler = sanitizeDOM(setDelta, setContent);
   const debounceHandler = debounce(sanitizeHandler, 200);
   return (delta: Delta, oldDelta: Delta, source: EmitterSource) => {
     if (source === "user") {
@@ -50,6 +55,17 @@ const textChangeCB = (
   };
 };
 
+const removeToolbar = () => {
+  const qlToolBar = document.querySelector(".ql-toolbar");
+  console.log(qlToolBar);
+  if (qlToolBar) {
+    const parent = qlToolBar.parentElement;
+    if (parent) {
+      parent.removeChild(qlToolBar);
+    }
+  }
+};
+
 export const initQuill = ({
   elem,
   setQuillInstance,
@@ -57,10 +73,11 @@ export const initQuill = ({
   setDelta,
 }: {
   elem: HTMLDivElement;
-  setQuillInstance: Dispatch<SetStateAction<Quill | undefined>>;
+  setQuillInstance: Dispatch<SetStateAction<Quill | null>>;
   setContent: (newContent: string) => void;
   setDelta: (delta: Delta) => void;
 }) => {
+  removeToolbar();
   const instance = new Quill(elem, {
     theme: "snow",
     modules: {
@@ -76,6 +93,20 @@ export const initQuill = ({
   });
   instance.on("text-change", textChangeCB(instance, setContent, setDelta));
   setQuillInstance(instance);
+};
+
+export const returnQuill = ({
+  elem,
+  setQuillInstance,
+}: {
+  elem: HTMLDivElement | null;
+  setQuillInstance: Dispatch<SetStateAction<Quill | undefined>>;
+}) => {
+  if (elem) {
+    setQuillInstance(undefined);
+    elem.innerHTML = "";
+    elem = null;
+  }
 };
 
 export const debounce = <T>(

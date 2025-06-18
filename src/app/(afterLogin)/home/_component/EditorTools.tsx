@@ -68,9 +68,12 @@ const EditorTools = () => {
       <IconBtn
         onClick={() => {
           if (setShowEmojiBox) {
-            const selection = quillInstance?.getSelection();
-            if (quillInstance && selection && setTempSelection) {
-              setTempSelection(selection);
+            if (quillInstance && setTempSelection) {
+              quillInstance?.focus();
+              const selection = quillInstance.getSelection();
+              if (selection) {
+                setTempSelection(selection);
+              }
             }
             setShowEmojiBox((prev) => !prev);
           }

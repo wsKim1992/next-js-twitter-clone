@@ -2,7 +2,7 @@
 
 import { Box } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
-import { useContext, useEffect, useMemo } from "react";
+import { useCallback, useContext, useMemo, useTransition } from "react";
 import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 import { handleClickImoji } from "@utils/homeForm";
 
@@ -33,26 +33,25 @@ const EmojiBox = styled(Box, {
 const Emoji: React.FC<{ emoji: string }> = ({ emoji }) => {
   const { quillInstance, setShowEmojiBox, tempSelection, setTempSelection } =
     useContext(Ctx);
-  useEffect(() => {
-    return () => {
-      if (setTempSelection) {
-        setTempSelection(undefined);
-      }
-    };
-  }, [setTempSelection]);
+  const [, startTransition] = useTransition();
   const clickEmojiHandler = useMemo(() => {
     if (quillInstance && tempSelection) {
       return handleClickImoji(quillInstance, tempSelection);
     }
   }, [quillInstance, tempSelection]);
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (clickEmojiHandler) {
       clickEmojiHandler(emoji);
     }
     if (setShowEmojiBox) {
       setShowEmojiBox(false);
+      startTransition(() => {
+        if (setTempSelection) {
+          setTempSelection(null);
+        }
+      });
     }
-  };
+  }, [clickEmojiHandler, setShowEmojiBox, setTempSelection, emoji]);
   return (
     <Box onClick={handleClick} className="imoji">
       {emoji}
