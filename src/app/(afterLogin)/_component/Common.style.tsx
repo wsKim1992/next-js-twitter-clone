@@ -3,6 +3,15 @@
 import { styled } from "@/stitches.config";
 import { Box, TextField, Tabs } from "@radix-ui/themes";
 
+export const MainContainer = styled(Box, {
+  width: "600px",
+  height: "auto",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "start",
+  alignItems: "stretch",
+});
+
 export const FormContainer = styled(Box, {
   width: "inherit",
   marginBottom: "60px",

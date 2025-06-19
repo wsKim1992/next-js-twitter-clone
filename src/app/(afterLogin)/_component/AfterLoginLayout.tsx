@@ -70,9 +70,7 @@ const AfterLoginLayout = ({
             asChild
             style={{
               width: "600px",
-              height: "auto",
-              overflow: "hidden",
-              overflowY: "auto",
+              height: "fit-content",
             }}
           >
             <main>{children}</main>

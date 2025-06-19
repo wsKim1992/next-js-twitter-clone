@@ -12,7 +12,7 @@ type TrendProps = TTrends;
 
 const Trend: FC<TrendProps> = ({ title, name, postNum }) => {
   const queryStr = useMemo(() => {
-    return new URLSearchParams({ name }).toString();
+    return new URLSearchParams({ queryText: name }).toString();
   }, [name]);
   return (
     <TrendBox asChild>

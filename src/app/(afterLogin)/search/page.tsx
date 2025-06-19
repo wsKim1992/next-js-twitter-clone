@@ -1,3 +1,8 @@
+import SearchForm from "@/app/(afterLogin)/search/_component/SearchForm";
 export default function Page() {
-  return <main>검색</main>;
+  return (
+    <>
+      <SearchForm />
+    </>
+  );
 }

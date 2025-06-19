@@ -2,14 +2,18 @@
 
 import { styled } from "@/stitches.config";
 import { Box, IconButton, Text } from "@radix-ui/themes";
-import { FormBox } from "@/app/(afterLogin)/_component/Common.style";
 export const ExplorePageBox = styled(Box, {
   width: "100%",
   height: "fit-content",
 });
 
-export const SearchFormBox = styled(FormBox, {
-  position: "unset",
+export const SearchFormBox = styled(Box, {
+  position: "sticky",
+  top: "0px",
+  width: "inherit",
+  height: "42px",
+  marginTop: "6px",
+  marginBottom: "12px",
 });
 
 export const SearchIcon = styled(IconButton, {
