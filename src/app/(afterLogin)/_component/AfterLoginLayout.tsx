@@ -5,6 +5,7 @@ import LNB from "./LNB";
 import BriefUserInfo from "./BriefUserInfo";
 import LeftForm from "./LeftForm";
 import Trends from "../explore/_component/Trends";
+import LeftInfo from "@/app/(afterLogin)/_component/LeftInfo";
 
 const AfterLoginLayout = ({
   children,
@@ -75,12 +76,7 @@ const AfterLoginLayout = ({
           >
             <main>{children}</main>
           </Box>
-          <Box asChild style={{ width: "350px", height: "100%" }}>
-            <section>
-              <LeftForm />
-              <Trends />
-            </section>
-          </Box>
+          <LeftInfo />
         </Flex>
       </Flex>
       {modal}
