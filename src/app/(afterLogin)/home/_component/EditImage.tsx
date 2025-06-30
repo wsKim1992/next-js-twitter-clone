@@ -16,10 +16,13 @@ import {
   useState,
   type Dispatch,
   type SetStateAction,
+  useContext,
 } from "react";
-import { useHomeStore } from "@stores/home";
 import { loadImage } from "@utils/homeForm";
 import ReactCrop, { type PixelCrop, type Crop } from "react-image-crop";
+import { useStore } from "zustand";
+import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
+
 type EditImageProps = {
   idx: number;
   setIsShowDialog: Dispatch<SetStateAction<boolean>>;
@@ -28,7 +31,8 @@ type EditImageProps = {
 const EditImage: FC<EditImageProps> = ({ idx, setIsShowDialog }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [crop, setCrop] = useState<Crop | null>(null);
-  const imgs = useHomeStore((state) => state.postForm.imgs);
+  const { editorStore } = useContext(Ctx);
+  const imgs = useStore(editorStore, (state) => state.postForm.imgs);
   const src = useMemo(() => {
     return imgs ? imgs.find((_, imgIdx) => imgIdx === idx) : undefined;
   }, [imgs, idx]);
@@ -45,8 +49,6 @@ const EditImage: FC<EditImageProps> = ({ idx, setIsShowDialog }) => {
         }
       }
     })();
-    console.log({ src });
-    console.log(ref.current);
   }, [src]);
 
   const handleChangeCrop = (crop: PixelCrop) => {

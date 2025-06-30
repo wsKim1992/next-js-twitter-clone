@@ -5,6 +5,14 @@ import Images from "./Images";
 import { createContext, Dispatch, SetStateAction, useState } from "react";
 import Editor from "@/app/(afterLogin)/home/_component/Editor";
 import Quill, { type Range } from "quill";
+import { StoreApi } from "zustand";
+import { type TEditorStore, type TEditorAction } from "@typings/editor";
+import { createEditorStore } from "@stores/editor";
+
+const initialObj = {
+  showEmojiBox: false,
+  editorStore: createEditorStore(),
+};
 
 export const Ctx = createContext<{
   showEmojiBox: boolean;
@@ -13,15 +21,13 @@ export const Ctx = createContext<{
   setQuillInstance?: Dispatch<SetStateAction<Quill | null>>;
   tempSelection?: Range | null;
   setTempSelection?: Dispatch<SetStateAction<Range | null>>;
-}>({
-  showEmojiBox: false,
-});
+  editorStore: StoreApi<TEditorAction & TEditorStore>;
+}>({ ...initialObj });
 
 const ContentEditable = () => {
   const [showEmojiBox, setShowEmojiBox] = useState<boolean>(false);
   const [quillInstance, setQuillInstance] = useState<Quill | null>(null);
   const [tempSelection, setTempSelection] = useState<Range | null>(null);
-
   return (
     <Flex
       direction={"column"}
@@ -35,6 +41,7 @@ const ContentEditable = () => {
     >
       <Ctx.Provider
         value={{
+          editorStore: initialObj.editorStore,
           showEmojiBox,
           setShowEmojiBox,
           quillInstance,

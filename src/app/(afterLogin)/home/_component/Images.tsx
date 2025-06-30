@@ -1,5 +1,4 @@
 "use client";
-import { useHomeStore } from "@stores/home";
 import { isEqual } from "lodash";
 import SingleImage from "./Image";
 import { useStoreWithEqualityFn } from "zustand/traditional";
@@ -21,7 +20,7 @@ import {
   slideToImgByIdx,
 } from "@utils/homeForm";
 import { type TImgSlideDir } from "@typings/home";
-
+import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 type ArrowButtonProps = {
   dir: TImgSlideDir;
 };
@@ -91,9 +90,10 @@ const ArrowButton: FC<ArrowButtonProps> = ({ dir }) => {
 };
 
 const useImageIdx = () => {
+  const { editorStore } = useContext(Ctx);
   const [imgIdx, setImgIdx] = useState(0);
   const imgs = useStoreWithEqualityFn(
-    useHomeStore,
+    editorStore,
     (state) => state.postForm.imgs,
     isEqual
   );

@@ -2,16 +2,21 @@
 import { Flex } from "@radix-ui/themes";
 import { IconBtn, IconWrapper } from "./Common.style";
 import { type ChangeEvent } from "react";
-import { useHomeStore } from "@stores/home";
 import { getBs64s } from "@utils/homeForm";
 import { useContext } from "react";
 import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 import Emojis from "@/app/(afterLogin)/home/_component/Emojis";
+import { useStore } from "zustand";
 
 const EditorTools = () => {
-  const { showEmojiBox, setShowEmojiBox, quillInstance, setTempSelection } =
-    useContext(Ctx);
-  const setImgs = useHomeStore((state) => state.setImgs);
+  const {
+    showEmojiBox,
+    setShowEmojiBox,
+    quillInstance,
+    setTempSelection,
+    editorStore,
+  } = useContext(Ctx);
+  const setImgs = useStore(editorStore, (state) => state.setImgs);
   const onChange = async (evt: ChangeEvent<HTMLInputElement>) => {
     try {
       const { files } = evt.target;

@@ -1,20 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { Box } from "@radix-ui/themes";
-import { useHomeStore } from "@stores/home";
-import { type FC, useState } from "react";
+import { type FC, useContext, useState } from "react";
+import { useStore } from "zustand";
 import { CancelButton } from "./Common.style";
 import { deleteImgs } from "@utils/homeForm";
 import EditImage from "./EditImage";
-
+import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 type SingleImageProps = {
   src: string;
   idx: number;
 };
 
 const SingleImage: FC<SingleImageProps> = ({ src, idx }) => {
+  const { editorStore } = useContext(Ctx);
   const [isShowDialog, setIsShowDialog] = useState<boolean>(false);
-  const setImgs = useHomeStore((state) => state.setImgs);
+  const setImgs = useStore(editorStore, (state) => state.setImgs);
   const handdleClickCancel = () => {
     setImgs({ idx, imgs: deleteImgs });
   };
