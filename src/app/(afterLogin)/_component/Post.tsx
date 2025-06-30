@@ -13,11 +13,33 @@ import tempProfileImg from "@public/tempProfile.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { Box, IconButton, Text } from "@radix-ui/themes";
-import { HeartIcon } from "@radix-ui/react-icons";
+import { HeartIcon, ChatBubbleIcon } from "@radix-ui/react-icons";
+import { useRouter } from "next/navigation";
+
+const dummyUser = {
+  content: {
+    user: {
+      id: 123,
+      src: tempProfileImg,
+      username: "Elon Musk",
+      nickname: "elonMush",
+    },
+    id: 1215,
+    text: "hello",
+    images: undefined,
+    postDate: new Date(),
+  },
+};
 
 const Post = () => {
+  const router = useRouter();
+  const handleClickCapture = () => {
+    router.push(
+      `${dummyUser.content.user.username}/status/${dummyUser.content.id}`
+    );
+  };
   return (
-    <PostBox>
+    <PostBox onClickCapture={handleClickCapture}>
       <PostProfileImg asChild>
         <Link href={`/profile/name`}>
           <Image src={tempProfileImg} width={40} height={40} alt="logo" />
@@ -26,16 +48,16 @@ const Post = () => {
       <PostContentBox>
         <PostTextBox>
           <PostUserNameBox>
-            <p className="nickname">Elon Musk</p>
-            <p className="id">@elon Musk</p>
+            <p className="nickname">{dummyUser.content.user.nickname}</p>
+            <p className="id">@&nbsp;{dummyUser.content.user.username}</p>
             <p className="time">&nbsp;.&nbsp;n초 전</p>
           </PostUserNameBox>
-          <MainContent>Text</MainContent>
+          <MainContent>{dummyUser.content.text}</MainContent>
         </PostTextBox>
         <PostButtonBox>
           <Box className="btn-wrapper">
             <IconButton className="icon-btn">
-              <HeartIcon width={20} height={20} />
+              <ChatBubbleIcon width={20} height={20} />
             </IconButton>
             <Text className="text">2</Text>
           </Box>

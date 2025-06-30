@@ -7,7 +7,14 @@ export const createEditorStore = (): StoreApi<TEditorStore & TEditorAction> =>
       content: "",
       imgs: undefined,
     },
-    init: () => set({}),
+    init: () =>
+      set((state) => ({
+        ...state,
+        postForm: {
+          content: "",
+          imgs: undefined,
+        },
+      })),
     setContent: (newContent) =>
       set((state) => ({
         ...state,

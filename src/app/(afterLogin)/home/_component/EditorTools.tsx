@@ -1,5 +1,4 @@
 "use client";
-import { Flex } from "@radix-ui/themes";
 import { IconBtn, IconWrapper } from "./Common.style";
 import { type ChangeEvent } from "react";
 import { getBs64s } from "@utils/homeForm";
@@ -7,7 +6,7 @@ import { useContext } from "react";
 import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 import Emojis from "@/app/(afterLogin)/home/_component/Emojis";
 import { useStore } from "zustand";
-
+import { ToolBarBox } from "./Common.style";
 const EditorTools = () => {
   const {
     showEmojiBox,
@@ -29,10 +28,7 @@ const EditorTools = () => {
     }
   };
   return (
-    <Flex
-      direction={"row"}
-      style={{ width: "inherit", height: "fit-content", position: "relative" }}
-    >
+    <ToolBarBox>
       <IconBtn>
         <input
           type="file"
@@ -97,7 +93,7 @@ const EditorTools = () => {
         </IconWrapper>
       </IconBtn>
       {showEmojiBox && <Emojis />}
-    </Flex>
+    </ToolBarBox>
   );
 };
 

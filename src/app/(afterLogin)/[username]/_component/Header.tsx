@@ -7,10 +7,10 @@ import { IconButton } from "@radix-ui/themes";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { useRouter } from "next/navigation";
 type HeaderProps = {
-  username: string;
+  title: string;
 };
 
-const Header: FC<HeaderProps> = ({ username }) => {
+const Header: FC<HeaderProps> = ({ title }) => {
   const router = useRouter();
   const handleClickArrow = () => {
     router.back();
@@ -25,7 +25,7 @@ const Header: FC<HeaderProps> = ({ username }) => {
       >
         <ArrowLeftIcon className="icon" />
       </IconButton>
-      <Title css={{ padding: "0px" }}>{username}</Title>
+      <Title css={{ padding: "0px" }}>{title}</Title>
     </HeaderBox>
   );
 };

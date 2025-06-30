@@ -1,13 +1,19 @@
 "use client";
-import { Flex } from "@radix-ui/themes";
 import EditorTools from "./EditorTools";
 import Images from "./Images";
-import { createContext, Dispatch, SetStateAction, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useState,
+} from "react";
 import Editor from "@/app/(afterLogin)/home/_component/Editor";
 import Quill, { type Range } from "quill";
 import { StoreApi } from "zustand";
 import { type TEditorStore, type TEditorAction } from "@typings/editor";
 import { createEditorStore } from "@stores/editor";
+import { EditorBox } from "@/app/(afterLogin)/home/_component/Common.style";
 
 const initialObj = {
   showEmojiBox: false,
@@ -28,20 +34,14 @@ const ContentEditable = () => {
   const [showEmojiBox, setShowEmojiBox] = useState<boolean>(false);
   const [quillInstance, setQuillInstance] = useState<Quill | null>(null);
   const [tempSelection, setTempSelection] = useState<Range | null>(null);
+  const editorStore = useMemo(() => {
+    return createEditorStore();
+  }, []);
   return (
-    <Flex
-      direction={"column"}
-      style={{
-        width: "100%",
-        flex: "1 1 0",
-        flexWrap: "wrap",
-        minWidth: "0px",
-        position: "relative",
-      }}
-    >
+    <EditorBox>
       <Ctx.Provider
         value={{
-          editorStore: initialObj.editorStore,
+          editorStore,
           showEmojiBox,
           setShowEmojiBox,
           quillInstance,
@@ -54,7 +54,7 @@ const ContentEditable = () => {
         <EditorTools />
         <Images />
       </Ctx.Provider>
-    </Flex>
+    </EditorBox>
   );
 };
 

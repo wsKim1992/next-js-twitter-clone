@@ -54,7 +54,7 @@ export const ProfileContent = styled(Flex, {
 });
 
 export const Layout = styled(Container, {
-  width: "100%",
+  width: "inherit",
   height: "fit-content",
   background: "#fff",
 });

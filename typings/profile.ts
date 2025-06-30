@@ -1,4 +1,4 @@
 export type TParams = {
-  username: string;
-  statusId?: string;
+  username?: string;
+  id?: string;
 };

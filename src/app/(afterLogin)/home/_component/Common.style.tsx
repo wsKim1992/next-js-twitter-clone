@@ -78,6 +78,21 @@ export const ImageContainer = styled(Box, {
   },
 });
 
+export const ToolBarBox = styled(Flex, {
+  width: "inherit",
+  height: "fit-content",
+  position: "relative",
+});
+
+export const EditorBox = styled(Flex, {
+  flexDirection: "column",
+  width: "100%",
+  flex: "1 1 0",
+  flexWrap: "wrap",
+  minWidth: "0px",
+  position: "relative",
+});
+
 export const Editor = styled(Box, {
   width: "512px",
   minHeight: "150px",

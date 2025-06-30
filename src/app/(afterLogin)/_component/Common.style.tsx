@@ -97,6 +97,7 @@ export const PostBox = styled(Flex, {
   borderBottomWidth: "1px",
   borderBottomStyle: "solid",
   gap: "10px",
+  cursor: "pointer",
 });
 
 export const PostProfileImg = styled(Box, {
