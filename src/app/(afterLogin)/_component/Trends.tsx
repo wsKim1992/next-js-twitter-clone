@@ -2,6 +2,7 @@
 import { Box } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
 import Trend from "./Trend";
+import { Title } from "@/app/(afterLogin)/_component/Common.style";
 
 const TrendsBox = styled(Box, {
   width: "inherit",
@@ -9,13 +10,6 @@ const TrendsBox = styled(Box, {
   backgroundColor: "#f7f9f9",
   borderRadius: "16px",
   marginTop: "12px",
-});
-
-const Title = styled("h3", {
-  fontSize: "20px",
-  fontWeight: "bold",
-  padding: "12px 16px",
-  width: "inherit",
 });
 
 const Trends = () => {

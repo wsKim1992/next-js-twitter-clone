@@ -3,6 +3,13 @@
 import { styled } from "@/stitches.config";
 import { Box, TextField, Tabs, Flex } from "@radix-ui/themes";
 
+export const Title = styled("h3", {
+  fontSize: "20px",
+  fontWeight: "bold",
+  padding: "12px 16px",
+  width: "inherit",
+});
+
 export const RecommandBox = styled(Flex, {
   flexDirection: "row",
   width: "100%",
