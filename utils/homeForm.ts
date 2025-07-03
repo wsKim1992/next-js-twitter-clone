@@ -55,9 +55,8 @@ const textChangeCB = (
   };
 };
 
-const removeToolbar = () => {
+export const removeToolbar = () => {
   const qlToolBar = document.querySelector(".ql-toolbar");
-  console.log(qlToolBar);
   if (qlToolBar) {
     const parent = qlToolBar.parentElement;
     if (parent) {
@@ -71,12 +70,17 @@ export const initQuill = ({
   setQuillInstance,
   setContent,
   setDelta,
+  isNoToolBar = false,
 }: {
   elem: HTMLDivElement;
   setQuillInstance: Dispatch<SetStateAction<Quill | null>>;
   setContent: (newContent: string) => void;
   setDelta: (delta: Delta) => void;
+  isNoToolBar?: boolean;
 }) => {
+  if (isNoToolBar) {
+    removeToolbar();
+  }
   removeToolbar();
   const instance = new Quill(elem, {
     theme: "snow",

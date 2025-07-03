@@ -1,13 +1,18 @@
 "use client";
 
-import { useRef, useEffect, useContext } from "react";
+import { useRef, useEffect, useContext, FC } from "react";
 import "quill/dist/quill.snow.css";
 
 import { Editor as EditorComponent } from "@/app/(afterLogin)/home/_component/Common.style";
 import { initQuill } from "@utils/homeForm";
 import { Ctx } from "@/app/(afterLogin)/home/_component/ContentEditable";
 import { useStore } from "zustand";
-const Editor = () => {
+import { removeToolbar } from "@utils/homeForm";
+type EditorProps = {
+  isNoToolBar?: boolean;
+};
+
+const Editor: FC<EditorProps> = ({ isNoToolBar = false }) => {
   const { setQuillInstance, editorStore } = useContext(Ctx);
   const setContent = useStore(editorStore, (state) => state.setContent);
   const setDelta = useStore(editorStore, (state) => state.setDelta);
@@ -22,6 +27,9 @@ const Editor = () => {
         setContent,
         setDelta,
       });
+      if (isNoToolBar) {
+        removeToolbar();
+      }
       return () => {
         init();
       };

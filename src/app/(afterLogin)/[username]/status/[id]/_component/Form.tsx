@@ -9,6 +9,7 @@ import {
 import tempImg from "@public/tempProfile.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { FC } from "react";
 
 const dummyUser = {
   id: 123,
@@ -17,7 +18,11 @@ const dummyUser = {
   src: tempImg,
 };
 
-const Form = () => {
+type FormProps = {
+  isNoToolBar?: boolean;
+};
+
+const Form: FC<FormProps> = ({ isNoToolBar = false }) => {
   return (
     <FormBox>
       <ProfileImgBox asChild>
@@ -28,7 +33,7 @@ const Form = () => {
         </Link>
       </ProfileImgBox>
       <EditorBox>
-        <ContentEditable />
+        <ContentEditable isNoToolBar={isNoToolBar} />
       </EditorBox>
     </FormBox>
   );

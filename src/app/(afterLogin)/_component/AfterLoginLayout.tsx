@@ -3,8 +3,6 @@ import { Box, Flex } from "@radix-ui/themes";
 import Logo from "./Logo";
 import LNB from "./LNB";
 import BriefUserInfo from "./BriefUserInfo";
-import LeftForm from "./LeftForm";
-import Trends from "../explore/_component/Trends";
 import LeftInfo from "@/app/(afterLogin)/_component/LeftInfo";
 
 const AfterLoginLayout = ({

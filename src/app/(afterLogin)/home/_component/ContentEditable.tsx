@@ -4,6 +4,7 @@ import Images from "./Images";
 import {
   createContext,
   Dispatch,
+  FC,
   SetStateAction,
   useMemo,
   useState,
@@ -30,7 +31,11 @@ export const Ctx = createContext<{
   editorStore: StoreApi<TEditorAction & TEditorStore>;
 }>({ ...initialObj });
 
-const ContentEditable = () => {
+type ContentEditableProps = {
+  isNoToolBar?: boolean;
+};
+
+const ContentEditable: FC<ContentEditableProps> = ({ isNoToolBar = false }) => {
   const [showEmojiBox, setShowEmojiBox] = useState<boolean>(false);
   const [quillInstance, setQuillInstance] = useState<Quill | null>(null);
   const [tempSelection, setTempSelection] = useState<Range | null>(null);
@@ -50,7 +55,7 @@ const ContentEditable = () => {
           setTempSelection,
         }}
       >
-        <Editor />
+        <Editor isNoToolBar={isNoToolBar} />
         <EditorTools />
         <Images />
       </Ctx.Provider>

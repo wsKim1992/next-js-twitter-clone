@@ -2,6 +2,11 @@
 import { Box, Button, Text, Flex } from "@radix-ui/themes";
 import { styled } from "@/stitches.config";
 
+export const PostBox = styled(Box, {
+  width: "100%",
+  height: "auto",
+});
+
 export const ImageCropSelectBox = styled(Box, {
   "&.ReactCrop--crop-selection": {
     border: "2px dotted rgb(29, 155, 240, 0.01)",

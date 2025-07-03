@@ -146,6 +146,16 @@ export const MainContent = styled(Box, {
   padding: "10px",
   width: "100%",
   height: "fit-content",
+  a: {
+    width: "100%",
+    height: "100%",
+    img: {
+      width: "100%",
+      height: "100%",
+      display: "block",
+      objectFit: "cover",
+    },
+  },
 });
 
 export const MainContainer = styled(Box, {
@@ -155,6 +165,30 @@ export const MainContainer = styled(Box, {
   flexDirection: "column",
   justifyContent: "start",
   alignItems: "stretch",
+});
+
+export const PostImageBox = styled(Box, {
+  width: "inherit",
+  display: "grid",
+  gridTemplateColumns: "repeat(2, minmax(50%, auto))",
+  gridTemplateRows: "repeat(2 ,1fr)",
+  gap: "5px",
+  height: "350px",
+  overflow: "hidden",
+  borderRadius: "25px",
+  border: "1px solid gray",
+});
+
+export const PostImg = styled(Box, {
+  display: "block",
+  width: "100%",
+});
+
+export const PostImgLink = styled(Box, {
+  width: "100%",
+  height: "100%",
+  display: "block",
+  overflow: "hidden",
 });
 
 export const FormContainer = styled(Box, {
