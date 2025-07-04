@@ -5,7 +5,7 @@ import { type ReactNode } from "react";
 import "@radix-ui/themes/styles.css";
 import StitchesProvider from "@/_component/StitchesProvider";
 import { Theme } from "@radix-ui/themes";
-
+import { MSWProvider } from "@/_component/MSWProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,7 +24,9 @@ export default function RootLayout({ children }: Props) {
       <head></head>
       <body className={inter.className}>
         <StitchesProvider>
-          <Theme>{children}</Theme>
+          <MSWProvider>
+            <Theme>{children}</Theme>
+          </MSWProvider>
         </StitchesProvider>
       </body>
     </html>
