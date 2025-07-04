@@ -1,3 +1,4 @@
+"use client";
 import { Box } from "@radix-ui/themes";
 import LNBLink from "./LNBLink";
 import UploadButton from "./UploadButton";
@@ -57,7 +58,7 @@ const LNB = () => {
         <Container>
           <LNBLink
             title="탐색하기"
-            path="/search"
+            path={["/explore", "/search"]}
             selectedIcon={
               <svg
                 width={26}
@@ -114,7 +115,36 @@ const LNB = () => {
             }
           />
         </Container>
-
+        <Container>
+          <LNBLink
+            title="프로필"
+            path="/zerocho"
+            selectedIcon={
+              <svg
+                width={26}
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e"
+              >
+                <g>
+                  <path d="M1.998 4.499c0-.828.671-1.499 1.5-1.499h17c.828 0 1.5.671 1.5 1.499v2.858l-10 4.545-10-4.547V4.499zm0 5.053V19.5c0 .828.671 1.5 1.5 1.5h17c.828 0 1.5-.672 1.5-1.5V9.554l-10 4.545-10-4.547z"></path>
+                </g>
+              </svg>
+            }
+            icon={
+              <svg
+                width="26"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-lwhw9o r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-cnnz9e"
+              >
+                <g>
+                  <path d="M17.863 13.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44zM12 2C9.791 2 8 3.79 8 6s1.791 4 4 4 4-1.79 4-4-1.791-4-4-4z"></path>
+                </g>
+              </svg>
+            }
+          />
+        </Container>
         <UploadButton />
       </nav>
     </Box>

@@ -1,14 +1,9 @@
 import { ReactNode } from "react";
-
+import { LayoutContainer } from "./_component/Common.style";
 export default async function HomeLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  return (
-    <div>
-      홈 레이아웃
-      {children}
-    </div>
-  );
+  return <LayoutContainer>{children}</LayoutContainer>;
 }
